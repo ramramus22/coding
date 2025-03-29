@@ -1,4 +1,4 @@
-tkinter as tk
+import tkinter as tk
 from time import strftime
 
 def update_time():
