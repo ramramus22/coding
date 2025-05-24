@@ -1,0 +1,211 @@
+# mp3player.kv
+# Main application colors are available via app.COLOR_NAME
+# Main application fonts are available via app.DEFAULT_FONT and app.DEFAULT_FONT_BOLD
+
+<EditTagsModalView@ModalView>:
+    size_hint: 0.9, 0.75 # Adjusted height
+    auto_dismiss: False
+    background_color: app.MODAL_BG_COLOR
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(20)
+        spacing: dp(10)
+
+        Label:
+            text: "Edit Track Metadata"
+            font_name: app.DEFAULT_FONT_BOLD
+            font_size: '18sp'
+            size_hint_y: None
+            height: dp(40)
+            color: app.PRIMARY_TEXT_COLOR
+
+        GridLayout:
+            cols: 2
+            spacing: dp(10)
+            padding: (0, dp(10)) # Padding around the grid
+            size_hint_y: 1 
+
+            Label: text: "Title:"; halign: 'left'; text_size: self.width, None; color: app.SECONDARY_TEXT_COLOR; font_name: app.DEFAULT_FONT; size_hint_y: None; height: dp(30)
+            TextInput: id: edit_title_input; text: root.edit_title; multiline: False; background_color: app.INPUT_BG_COLOR; foreground_color: app.PRIMARY_TEXT_COLOR; font_name: app.DEFAULT_FONT; size_hint_y: None; height: dp(40); padding: [dp(6), dp(10), dp(6), dp(10)]
+            
+            Label: text: "Artist:"; halign: 'left'; text_size: self.width, None; color: app.SECONDARY_TEXT_COLOR; font_name: app.DEFAULT_FONT; size_hint_y: None; height: dp(30)
+            TextInput: id: edit_artist_input; text: root.edit_artist; multiline: False; background_color: app.INPUT_BG_COLOR; foreground_color: app.PRIMARY_TEXT_COLOR; font_name: app.DEFAULT_FONT; size_hint_y: None; height: dp(40); padding: [dp(6), dp(10), dp(6), dp(10)]
+            
+            Label: text: "Album:"; halign: 'left'; text_size: self.width, None; color: app.SECONDARY_TEXT_COLOR; font_name: app.DEFAULT_FONT; size_hint_y: None; height: dp(30)
+            TextInput: id: edit_album_input; text: root.edit_album; multiline: False; background_color: app.INPUT_BG_COLOR; foreground_color: app.PRIMARY_TEXT_COLOR; font_name: app.DEFAULT_FONT; size_hint_y: None; height: dp(40); padding: [dp(6), dp(10), dp(6), dp(10)]
+            
+            Label: text: "Genre:"; halign: 'left'; text_size: self.width, None; color: app.SECONDARY_TEXT_COLOR; font_name: app.DEFAULT_FONT; size_hint_y: None; height: dp(30)
+            TextInput: id: edit_genre_input; text: root.edit_genre; multiline: False; background_color: app.INPUT_BG_COLOR; foreground_color: app.PRIMARY_TEXT_COLOR; font_name: app.DEFAULT_FONT; size_hint_y: None; height: dp(40); padding: [dp(6), dp(10), dp(6), dp(10)]
+            
+            Label: text: "Year:"; halign: 'left'; text_size: self.width, None; color: app.SECONDARY_TEXT_COLOR; font_name: app.DEFAULT_FONT; size_hint_y: None; height: dp(30)
+            TextInput: id: edit_year_input; text: root.edit_year; multiline: False; background_color: app.INPUT_BG_COLOR; foreground_color: app.PRIMARY_TEXT_COLOR; font_name: app.DEFAULT_FONT; size_hint_y: None; height: dp(40); padding: [dp(6), dp(10), dp(6), dp(10)]
+            
+        BoxLayout: 
+            size_hint_y: None 
+            height: dp(50)
+            spacing: dp(10)
+            padding: (0, dp(10), 0, 0) 
+            Button:
+                text: "Save Tags"
+                font_name: app.DEFAULT_FONT_BOLD
+                on_press: app.root.save_tags() 
+                background_color: app.BUTTON_ACCENT_BG_COLOR
+                color: app.BUTTON_ACCENT_TEXT_COLOR
+            Button:
+                text: "Cancel"
+                font_name: app.DEFAULT_FONT
+                on_press: root.dismiss() 
+                background_color: app.BUTTON_BG_COLOR
+                color: app.PRIMARY_TEXT_COLOR
+
+
+<EQModalView@ModalView>:
+    size_hint: 0.9, 0.85 # Adjusted height
+    auto_dismiss: False
+    background_color: app.MODAL_BG_COLOR
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(15)
+        spacing: dp(10)
+        Label:
+            text: "Equalizer Settings"
+            font_name: app.DEFAULT_FONT_BOLD
+            font_size: '18sp'
+            size_hint_y: None; height: dp(40)
+            color: app.PRIMARY_TEXT_COLOR
+        BoxLayout: 
+            size_hint_y: None; height: dp(40)
+            Label: text: "Enable EQ"; font_name: app.DEFAULT_FONT; color: app.SECONDARY_TEXT_COLOR
+            Switch: id: eq_enable_switch; active: app.root.equalizer_enabled; on_active: app.root.enable_equalizer(self.active)
+        BoxLayout: 
+            size_hint_y: None; height: dp(40)
+            Label: text: "Preset"; font_name: app.DEFAULT_FONT; color: app.SECONDARY_TEXT_COLOR
+            Spinner:
+                id: eq_preset_spinner; text: app.root.current_preset_name; values: app.eq_preset_names
+                font_name: app.DEFAULT_FONT; on_text: app.root.apply_eq_preset(self.text)
+                background_color: app.BUTTON_BG_COLOR; color: app.PRIMARY_TEXT_COLOR
+        BoxLayout: 
+            size_hint_y: None; height: dp(40)
+            Label: text: "Preamp"; size_hint_x: 0.3; font_name: app.DEFAULT_FONT; color: app.SECONDARY_TEXT_COLOR
+            Slider:
+                id: eq_preamp_slider; min: -20; max: 20; value: 0; step: 0.1; on_value_pos: app.root.set_eq_preamp_gain(self.value)
+                size_hint_x: 0.7; value_track: True; value_track_color: app.ACCENT_COLOR
+                cursor_size: (dp(20), dp(20)); background_horizontal_width: dp(5); value_track_width: dp(5) # Styling slider track
+                thumb_image: "img/slider_thumb_cyan.png" # Placeholder
+        Label: text: "Bands"; font_name: app.DEFAULT_FONT; size_hint_y: None; height: dp(20); color: app.SECONDARY_TEXT_COLOR; font_size: '12sp'
+        ScrollView:
+            size_hint_y: 1; bar_width: dp(5); bar_color: app.ACCENT_COLOR
+            GridLayout: id: eq_bands_layout; cols: 1; size_hint_y: None; height: self.minimum_height; spacing: dp(2)
+        BoxLayout: 
+            size_hint_y: None; height: dp(50); spacing: dp(10)
+            Button: text: "Reset EQ"; font_name: app.DEFAULT_FONT; on_press: app.root.reset_equalizer_settings(); background_color: app.BUTTON_BG_COLOR; color: app.PRIMARY_TEXT_COLOR
+            Button: text: "Close"; font_name: app.DEFAULT_FONT; on_press: root.dismiss(); background_color: app.BUTTON_BG_COLOR; color: app.PRIMARY_TEXT_COLOR
+
+<PlaylistEntry>:
+    orientation: 'horizontal'; size_hint_y: None; height: dp(40); padding: dp(5)
+    path: ''; text: ''; index: 0; main_player_window: None
+    canvas.before:
+        Color:
+            rgba: app.PLAYLIST_ITEM_SELECTED_BG if root.is_selected else app.PLAYLIST_ITEM_BG
+        Rectangle:
+            pos: self.pos; size: self.size
+    Button:
+        text: root.text; font_name: app.DEFAULT_FONT
+        text_size: self.width - dp(10), None; halign: 'left'; valign: 'middle'; shorten: True; shorten_from: 'right'
+        color: app.BUTTON_ACCENT_TEXT_COLOR if root.is_selected else app.PRIMARY_TEXT_COLOR
+        background_color: (0,0,0,0) # Fully transparent, rely on canvas for bg
+        on_release: root.on_release_button()
+
+<MainPlayerWindow>:
+    orientation: 'vertical'
+    album_art_source: 'data/logo/kivy-icon-256.png' 
+    canvas.before:
+        Color:
+            rgba: app.BG_COLOR
+        Rectangle:
+            pos: self.pos; size: self.size
+
+    BoxLayout: # Top Section - Track Info - 30%
+        size_hint_y: 0.30; padding: dp(15); spacing: dp(10)
+        Image:
+            id: album_art_image; source: root.album_art_source
+            size_hint_x: 0.4; allow_stretch: True; keep_ratio: True; color: (1,1,1,1)
+        BoxLayout:
+            orientation: 'vertical'; size_hint_x: 0.6; spacing: dp(2)
+            Label:
+                id: track_title_label; text: root.track_title_label_text
+                font_name: app.DEFAULT_FONT_BOLD; font_size: '18sp'; color: app.PRIMARY_TEXT_COLOR
+                halign: 'left'; valign: 'top'; text_size: self.width, None; shorten: True; shorten_from: 'right'; ellipsis_options: {'color': app.SECONDARY_TEXT_COLOR}
+                size_hint_y: 0.28
+            Label:
+                id: artist_label; text: root.artist_label_text
+                font_name: app.DEFAULT_FONT; font_size: '14sp'; color: app.SECONDARY_TEXT_COLOR
+                halign: 'left'; valign: 'top'; text_size: self.width, None; shorten: True; shorten_from: 'right';
+                size_hint_y: 0.18
+            Label:
+                id: album_label; text: root.album_label_text
+                font_name: app.DEFAULT_FONT; font_size: '14sp'; color: app.SECONDARY_TEXT_COLOR
+                halign: 'left'; valign: 'top'; text_size: self.width, None; shorten: True; shorten_from: 'right';
+                size_hint_y: 0.18
+            Label:
+                id: genre_label; text: root.genre_label_text
+                font_name: app.DEFAULT_FONT; font_size: '12sp'; color: app.TERTIARY_TEXT_COLOR
+                halign: 'left'; valign: 'top'; text_size: self.width, None; shorten: True; shorten_from: 'right';
+                size_hint_y: 0.18
+            Label:
+                id: year_label; text: root.year_label_text
+                font_name: app.DEFAULT_FONT; font_size: '12sp'; color: app.TERTIARY_TEXT_COLOR
+                halign: 'left'; valign: 'top'; text_size: self.width, None;
+                size_hint_y: 0.18
+
+    BoxLayout: # Middle Section - Controls - 20%
+        orientation: 'vertical'; size_hint_y: 0.20; padding: dp(10); spacing: dp(5)
+        BoxLayout: # Playback Buttons
+            size_hint_y: 0.5; spacing: dp(1) 
+            Button: # Prev - Placeholder for icon
+                id: prev_button; text: 'Prev'; font_name: app.DEFAULT_FONT; on_press: root.play_previous_track(); background_color: (0,0,0,0); color: app.PRIMARY_TEXT_COLOR
+            Button: # Play/Pause - Placeholder for icon
+                id: play_pause_button; text: root.play_pause_button_text; font_name: app.DEFAULT_FONT_BOLD; on_press: root.toggle_play_pause(); background_color: app.BUTTON_ACCENT_BG_COLOR; color: app.BUTTON_ACCENT_TEXT_COLOR
+            Button: # Next - Placeholder for icon
+                id: next_button; text: 'Next'; font_name: app.DEFAULT_FONT; on_press: root.play_next_track(); background_color: (0,0,0,0); color: app.PRIMARY_TEXT_COLOR
+            Button: # Stop - Placeholder for icon
+                id: stop_button; text: 'Stop'; font_name: app.DEFAULT_FONT; on_press: root.stop_audio(); background_color: (0,0,0,0); color: app.PRIMARY_TEXT_COLOR
+            Button: # EQ - Placeholder for icon
+                id: eq_button; text: "EQ"; font_name: app.DEFAULT_FONT; on_press: root.open_eq_modal(); background_color: (0,0,0,0); color: app.PRIMARY_TEXT_COLOR; size_hint_x: 0.6
+        Slider: # Seek Bar
+            id: seek_slider; min: 0; max: root.seek_slider_max; value: root.seek_slider_value; size_hint_y: 0.25
+            cursor_size: (dp(20), dp(20)); value_track: True; value_track_color: app.ACCENT_COLOR
+            # thumb_image: 'img/slider_thumb_cyan.png' # Requires image
+            background_horizontal_width: dp(5) # Thickness of the bar
+            value_track_width: dp(5)      # Thickness of the value track
+            # background_horizontal: 'img/slider_bg_dark.png' # Requires image, using color instead
+            canvas.before: # Manual styling for background track
+                Color:
+                    rgba: app.SLIDER_BG_COLOR
+                Rectangle:
+                    pos: self.x, self.center_y - dp(2.5)
+                    size: self.width, dp(5)
+            on_touch_down: root.on_seek_slider_touch_down(self); on_touch_up: root.on_seek_slider_touch_up(self)
+        Label: # Time Display
+            id: time_label; text: root.time_label_text; font_name: app.DEFAULT_FONT; size_hint_y: 0.25; font_size: '12sp'; color: app.SECONDARY_TEXT_COLOR
+
+    BoxLayout: # Bottom Section - Playlist & Utility - 50%
+        orientation: 'vertical'; size_hint_y: 0.50; padding: (dp(10), dp(5), dp(10), dp(10)); spacing: dp(5)
+        BoxLayout: # Edit Tags button container
+            size_hint_y: None; height: dp(35); padding: (0, dp(5))
+            Button:
+                id: edit_tags_button; text: "Edit Current Track Tags"; font_name: app.DEFAULT_FONT
+                size_hint_y: None; height: dp(30); on_press: root.open_edit_tags_modal()
+                background_color: app.BUTTON_BG_COLOR; color: app.SECONDARY_TEXT_COLOR
+        RecycleView:
+            id: playlist_rv; size_hint_y: 1; data: root.playlist_view_data; viewclass: 'PlaylistEntry'
+            bar_width: dp(5); bar_color: app.ACCENT_COLOR; scroll_type: ['bars', 'content']
+            RecycleBoxLayout:
+                default_size: None, dp(40); default_size_hint: 1, None; size_hint_y: None
+                height: self.minimum_height; orientation: 'vertical'; spacing: dp(2)
+        BoxLayout: # Utility buttons
+            size_hint_y: None; height: dp(50); spacing: dp(10); padding: (0, dp(5), 0, 0) # Padding above buttons
+            Button: id: open_file_button; text: 'Add File(s)'; font_name: app.DEFAULT_FONT; on_press: root.open_file_dialog(); background_color: app.BUTTON_BG_COLOR; color: app.PRIMARY_TEXT_COLOR
+            Button: id: open_folder_button; text: 'Add Folder'; font_name: app.DEFAULT_FONT; on_press: root.open_folder_dialog(); background_color: app.BUTTON_BG_COLOR; color: app.PRIMARY_TEXT_COLOR
