@@ -23,7 +23,7 @@ const EventDetails: React.FC = () => {
 
           {/* Time */}
           <div className="flex flex-col items-center p-8 bg-white/5 rounded-2xl backdrop-blur-sm border border-white/10 hover:border-pp-gold/50 transition-all group">
-             <div className="w-16 h-16 bg-pp-gold/20 rounded-full flex items-center justify-center mb-6 group-hover:bg-pp-gold/30 transition-colors">
+            <div className="w-16 h-16 bg-pp-gold/20 rounded-full flex items-center justify-center mb-6 group-hover:bg-pp-gold/30 transition-colors">
               <Clock className="w-8 h-8 text-pp-gold" />
             </div>
             <h3 className="text-xl font-bold mb-2">Hora</h3>
@@ -32,7 +32,7 @@ const EventDetails: React.FC = () => {
 
           {/* Location */}
           <div className="flex flex-col items-center p-8 bg-white/5 rounded-2xl backdrop-blur-sm border border-white/10 hover:border-pp-gold/50 transition-all group">
-             <div className="w-16 h-16 bg-pp-gold/20 rounded-full flex items-center justify-center mb-6 group-hover:bg-pp-gold/30 transition-colors">
+            <div className="w-16 h-16 bg-pp-gold/20 rounded-full flex items-center justify-center mb-6 group-hover:bg-pp-gold/30 transition-colors">
               <MapPin className="w-8 h-8 text-pp-gold" />
             </div>
             <h3 className="text-xl font-bold mb-2">Lugar</h3>
@@ -40,13 +40,13 @@ const EventDetails: React.FC = () => {
           </div>
         </div>
 
-        {/* Stylized Map Placeholder */}
+        {/* Map with marker */}
         <div className="w-full h-96 rounded-3xl overflow-hidden relative shadow-2xl border border-gray-700">
           <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3761.656337004986!2d-70.6951477!3d19.7986733!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8eb1e36e087434ad%3A0x8737696635075178!2sCasa%20De%20Cultura!5e0!3m2!1sen!2sdo!4v1709582919281!5m2!1sen!2sdo" 
+            src="https://maps.google.com/maps?q=Casa+de+la+Cultura,+Calle+Separacion,+Puerto+Plata,+Dominican+Republic&z=18&output=embed" 
             width="100%" 
             height="100%" 
-            style={{border:0, filter: "grayscale(100%) invert(92%) contrast(83%)"}} 
+            style={{border:0}} 
             allowFullScreen={true} 
             loading="lazy" 
             referrerPolicy="no-referrer-when-downgrade"

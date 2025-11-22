@@ -28,7 +28,7 @@ const Gallery: React.FC = () => {
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-              <p className="text-white font-serif text-xl">Fortaleza San Felipe</p>
+              <p className="text-white font-serif text-xl">Vista Aérea</p>
             </div>
           </div>
 
@@ -63,13 +63,13 @@ const Gallery: React.FC = () => {
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-              <p className="text-white font-serif text-xl">Teleférico</p>
+              <p className="text-white font-serif text-xl">Calle de las Sombrillas</p>
             </div>
           </div>
 
            <div className="md:col-span-2 relative group overflow-hidden rounded-2xl cursor-pointer bg-pp-blue/20 flex items-center justify-center border border-white/10 hover:border-pp-gold/50 transition-colors">
              <div className="text-center p-6">
-               <p className="font-serif text-2xl text-pp-gold italic">"Donde el Atlántico besa la montaña..."</p>
+               <p className="font-serif text-2xl text-pp-gold italic">"Un pueblo atrapado entre las aguas del Atlántico y montañas de un verde tropical..."</p>
                <p className="text-sm text-gray-400 mt-2">- H. Gaud</p>
              </div>
           </div>

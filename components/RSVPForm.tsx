@@ -7,18 +7,34 @@ const RSVPForm: React.FC = () => {
     guests: '1',
     message: ''
   });
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('submitting');
     
-    // Simulate network request without API
-    setTimeout(() => {
-      setStatus('success');
-      // In a real deployment without backend, one might use Formspree or similar, 
-      // but for this demo, we just show success state.
-    }, 1500);
+    try {
+      const response = await fetch('https://formspree.io/f/xjkzoepz', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          nombre: formData.name,
+          email: formData.email,
+          asistentes: formData.guests,
+          mensaje: formData.message
+        })
+      });
+
+      if (response.ok) {
+        setStatus('success');
+      } else {
+        setStatus('error');
+      }
+    } catch (error) {
+      setStatus('error');
+    }
   };
 
   return (
@@ -42,6 +58,20 @@ const RSVPForm: React.FC = () => {
                 className="mt-8 text-pp-gold hover:underline text-sm"
               >
                 Enviar otra respuesta
+              </button>
+            </div>
+          ) : status === 'error' ? (
+            <div className="text-center py-12 animate-fade-in-up">
+              <div className="w-20 h-20 bg-red-500/20 text-red-400 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+              </div>
+              <h3 className="text-2xl font-serif text-white mb-2">Error al enviar</h3>
+              <p className="text-gray-300">Por favor intente nuevamente.</p>
+              <button 
+                onClick={() => setStatus('idle')}
+                className="mt-8 text-pp-gold hover:underline text-sm"
+              >
+                Intentar de nuevo
               </button>
             </div>
           ) : (

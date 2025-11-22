@@ -32,9 +32,9 @@ const BookSection: React.FC = () => {
           {/* Text Content */}
           <div className="text-left">
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-white mb-6">
-              Una Ventana a los <span className="text-pp-gold">Años 70</span>
+              Una Ventana a <span className="text-pp-gold">Otra Época</span>
             </h2>
-            <p className="text-lg text-gray-300 mb-6 leading-relaxed">
+            <p className="text-lg text-gray-300 mb-6 leading-relaxed whitespace-pre-line">
               {EVENT_DETAILS.description}
             </p>
             <p className="text-lg text-gray-400 mb-8 leading-relaxed">
