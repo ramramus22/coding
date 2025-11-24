@@ -19,7 +19,7 @@ export const NAV_LINKS = [
 
 // Placeholder images simulating Puerto Plata scenery
 export const IMAGES = {
-  hero: "https://picsum.photos/id/1050/1920/1080", // Mountain/Sea vibe
+  hero: "https://files.catbox.moe/814lm3.mp4", // Mountain/Sea vibe
   bookCover: "https://i.ibb.co/7JWWMSNQ/ver07.jpg", // Abstract vintage
   victorianHouse: "https://i.ibb.co/0pPJcpfk/victoriana.jpg", // Architecture
   malecoon: "https://i.ibb.co/5xR1WY7F/sea.jpg", // Sea/Coast
