@@ -5,13 +5,17 @@ import { ChevronDown } from 'lucide-react';
 const Hero: React.FC = () => {
   return (
     <div className="relative h-screen w-full overflow-hidden flex items-center justify-center">
-      {/* Background Image with Overlay */}
-      <div 
-        className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat transform scale-105 animate-pulse-slow"
-        style={{ backgroundImage: `url('${IMAGES.hero}')` }}
+      {/* Background Video with Overlay */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-pp-dark/60 via-pp-dark/40 to-pp-dark"></div>
-      </div>
+        <source src={IMAGES.hero} type="video/mp4" />
+      </video>
+      <div className="absolute inset-0 bg-gradient-to-b from-pp-dark/60 via-pp-dark/40 to-pp-dark"></div>
 
       {/* Content */}
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto mt-16">
